@@ -1,0 +1,22 @@
+digraph G {
+ graph [rankdir=TB, fontname="DejaVu Sans", bgcolor="white", pad=.25, nodesep=.5, ranksep=.8, splines=polyline, label="Arquitectura propuesta | ETL de opiniones", labelloc=t, fontsize=20];
+ node [shape=box, style="rounded,filled", color="#2B5266", fillcolor="#F1F7FA", fontname="DejaVu Sans", fontsize=12, margin="0.18,0.12"];
+ edge [color="#597482", arrowsize=.7, penwidth=1.4];
+ csv [label="Encuestas internas\nCSV"];
+ db [label="Reseñas\nSQLite"];
+ api [label="Comentarios\nAPI REST"];
+ subgraph cluster_worker {
+   label="Worker Service .NET 8 (E de ETL)"; labelloc=b; labeljust=l; fontsize=13; fontname="DejaVu Sans"; color="#95BBC6"; style="rounded,dashed";
+   c [label="CsvExtractor"];
+   d [label="DatabaseExtractor"];
+   a [label="ApiExtractor"];
+   s [label="StagingStore\nJSONL", fillcolor="#DDF3EA"];
+   c -> s; d -> s; a -> s;
+ }
+ csv -> c; db -> d; api -> a;
+ t [label="Transformacion\n(fase futura)", style="rounded,dashed", color="#7D8790"];
+ l [label="Base analitica\n(fase futura)", style="rounded,dashed", color="#7D8790"];
+ viz [label="Dashboard\n(fase futura)", style="rounded,dashed", color="#7D8790"];
+ s -> t [style=dashed]; t -> l [style=dashed]; l -> viz [style=dashed];
+ {rank=same; csv; db; api}
+}

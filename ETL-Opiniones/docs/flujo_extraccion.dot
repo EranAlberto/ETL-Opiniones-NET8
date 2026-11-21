@@ -1,0 +1,19 @@
+digraph G {
+ graph [rankdir=TB, fontname="DejaVu Sans", bgcolor="white", pad=.2, nodesep=.35, ranksep=.35, label="Flujo del proceso de extraccion", labelloc=t, fontsize=19];
+ node [shape=box, style="rounded,filled", fillcolor="#F4F9FC", color="#315D70", fontname="DejaVu Sans", fontsize=11, margin=".18,.09"];
+ edge [color="#5B7480", arrowsize=.65, penwidth=1.3];
+ inicio [label="Inicio", shape=oval, fillcolor="#DDF3EA"];
+ cfg [label="Leer appsettings.json\ny preparar SQLite demo"];
+ split [label="Ejecutar extracciones\ncon Task.WhenAll"];
+ csv [label="Leer y validar\nCSV"];
+ db [label="Consultar\nSQLite"];
+ api [label="Consumir\nAPI REST"];
+ join [label="Guardar cada fuente en\nStaging/*.jsonl"];
+ log [label="Registrar filas, duracion\ny errores con ILogger"];
+ fin [label="Fin (resultado total o parcial)", shape=oval, fillcolor="#DDF3EA"];
+ inicio -> cfg -> split;
+ split -> csv; split -> db; split -> api;
+ csv -> join; db -> join; api -> join;
+ join -> log -> fin;
+ {rank=same;csv;db;api}
+}
