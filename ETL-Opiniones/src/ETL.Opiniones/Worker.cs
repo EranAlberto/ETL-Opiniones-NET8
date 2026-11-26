@@ -12,6 +12,7 @@ public sealed class Worker : BackgroundService
 {
     private readonly IReadOnlyList<IExtractor> _extractors;
     private readonly StagingStore _staging;
+    private readonly DimensionLoader _loader;
     private readonly DemoDatabaseSeeder _seeder;
     private readonly ExtractionOptions _options;
     private readonly ILogger<Worker> _logger;
@@ -19,6 +20,7 @@ public sealed class Worker : BackgroundService
 
     public Worker(IEnumerable<IExtractor> extractors,
         StagingStore staging,
+        DimensionLoader loader,
         DemoDatabaseSeeder seeder,
         IOptions<ExtractionOptions> options,
         ILogger<Worker> logger,
@@ -26,6 +28,7 @@ public sealed class Worker : BackgroundService
     {
         _extractors = extractors.ToList();
         _staging = staging;
+        _loader = loader;
         _seeder = seeder;
         _options = options.Value;
         _logger = logger;
@@ -51,7 +54,10 @@ public sealed class Worker : BackgroundService
                 _logger.LogWarning("Finalizado con fuentes que presentaron errores.");
             }
             else
+            {
                 _logger.LogInformation("Todas las extracciones finalizaron correctamente.");
+                await _loader.LoadAsync(stoppingToken);
+            }
         }
         catch (OperationCanceledException) when (stoppingToken.IsCancellationRequested)
         {

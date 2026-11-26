@@ -1,0 +1,9 @@
+Corrida 1: 11 entradas; dimensiones: [3, 11, 6]
+Corrida 2: 11 entradas; dimensiones: [3, 11, 6]
+DimFuente
+[(1, 'CSV'), (2, 'Base de datos'), (3, 'API REST')]
+DimCliente
+[(1, 'Pedro', 'CSV'), (2, 'Carmen', 'CSV'), (3, 'Luis', 'CSV'), (4, 'Luisa', 'CSV'), (5, 'Roberto', 'CSV'), (6, 'Claudia', 'Base de datos'), (7, 'Jose', 'Base de datos'), (8, 'Rosa', 'Base de datos'), (9, 'Miguel', 'Base de datos'), (10, 'Ana', 'Base de datos'), (11, 'Cliente de prueba API', 'API REST')]
+DimFecha
+[(0, 'Desconocida', None, None, None), (20261101, '2026-11-01', 2026, 11, 1), (20261102, '2026-11-02', 2026, 11, 2), (20261103, '2026-11-03', 2026, 11, 3), (20261104, '2026-11-04', 2026, 11, 4), (20261105, '2026-11-05', 2026, 11, 5)]
+Integridad: ok

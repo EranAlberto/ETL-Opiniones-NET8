@@ -16,6 +16,7 @@ builder.Services.AddHttpClient("comentarios-api", client =>
 });
 
 builder.Services.AddSingleton<StagingStore>();
+builder.Services.AddSingleton<DimensionLoader>();
 builder.Services.AddSingleton<DemoDatabaseSeeder>();
 builder.Services.AddTransient<IExtractor, CsvExtractor>();
 builder.Services.AddTransient<IExtractor, DatabaseExtractor>();

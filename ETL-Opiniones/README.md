@@ -54,3 +54,9 @@ No se incluyen capturas de una ejecucion real porque esta entrega se genero en u
 ## Diagramas
 
 `docs/arquitectura.png`, `docs/flujo_extraccion.png`. Sus archivos editables `*.dot` se pueden abrir con Graphviz. Tambien se entregan por separado para insertar en una presentacion o en el informe.
+
+## Etapa 2: carga dimensional
+
+Esta version incorpora la carga despues de una extraccion exitosa de las tres fuentes. Ejecutar desde `src/ETL.Opiniones` con `dotnet run`. Se genera `Data/warehouse.db` con DimFuente, DimCliente y DimFecha. Las fechas ausentes se representan mediante la clave 0 (Desconocida). Se conserva el origen del cliente para no fusionar nombres de fuentes distintas. Las claves unicas evitan duplicados al repetir la carga; la transaccion garantiza atomicidad. Si falla una fuente no se ejecuta la carga, para evitar usar staging antiguo. No se implementa tabla de hechos en esta etapa.
+
+Para inspeccionar las tablas, abrir warehouse.db con DB Browser for SQLite y ejecutar SELECT * FROM DimFuente; SELECT * FROM DimCliente; SELECT * FROM DimFecha;. Capturar tambien los logs de dotnet run. La prueba SQL offline se encuentra en docs/prueba_dimensiones.py; no sustituye la prueba integral .NET.
